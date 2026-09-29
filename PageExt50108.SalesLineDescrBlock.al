@@ -1,3 +1,9 @@
+/*
+    Author: Niklas Dougherty <nd@abas.se>
+    Date: 2026-09-29
+    Description: Prevent sales staff from changing description on sales lines, with some exceptions.
+*/
+
 pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
 {
     layout
