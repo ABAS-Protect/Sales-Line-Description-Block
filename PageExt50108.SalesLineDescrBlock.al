@@ -11,7 +11,6 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
         modify(Description)
         {
             Editable = IsDescriptionEditable;
-            StyleExpr = DescriptionStyle;
         }
     }
 
@@ -29,7 +28,6 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
         IsDescriptionEditable: Boolean;
         IsPremiumUser: Boolean;
         HasCheckedUserPlan: Boolean;
-        DescriptionStyle: Text;
 
     local procedure EvaluateEditableCondition()
     var
