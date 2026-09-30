@@ -73,17 +73,12 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
 
     local procedure CheckIfPremiumUser(): Boolean
     var
-        UsersInPlans: Query "Users in Plans";
+        AccessControl: Record "Access Control";
     begin
-        UsersInPlans.SetRange(User_Security_ID, UserSecurityId());
-        UsersInPlans.Open();
-        while UsersInPlans.Read() do begin
-            if StrPos(LowerCase(UsersInPlans.Plan_Name), 'premium') > 0 then begin
-                UsersInPlans.Close();
-                exit(true);
-            end;
-        end;
-        UsersInPlans.Close();
-        exit(false);
+        AccessControl.SetRange("User Security ID", UserSecurityId());
+        AccessControl.SetRange("Role ID", 'D365 BUS PREMIUM');
+        // AccessControl.SetFilter("Company Name", '%1|%2', '', CompanyName());
+
+        exit(not AccessControl.IsEmpty());
     end;
 }
