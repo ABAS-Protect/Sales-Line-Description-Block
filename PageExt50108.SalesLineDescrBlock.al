@@ -32,6 +32,7 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
     local procedure EvaluateEditableCondition()
     var
         Item: Record Item;
+        UserSecurityHelper: Codeunit "User Security Helper";
     begin
         if (Rec.Type = Rec.Type::Item) and ((Rec."No." = '449') or (Rec."No." = '189')) then begin
             IsDescriptionEditable := true;
@@ -55,7 +56,7 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
         end;
 
         if not HasCheckedUserPlan then begin
-            IsPremiumUser := CheckIfPremiumUser();
+            IsPremiumUser := UserSecurityHelper.CheckIfPremiumUser();
             HasCheckedUserPlan := true;
         end;
 
@@ -69,16 +70,5 @@ pageextension 50108 "Block Sales Line Desc" extends "Sales Order Subform"
         end;
 
         IsDescriptionEditable := false;
-    end;
-
-    local procedure CheckIfPremiumUser(): Boolean
-    var
-        AccessControl: Record "Access Control";
-    begin
-        AccessControl.SetRange("User Security ID", UserSecurityId());
-        AccessControl.SetRange("Role ID", 'D365 BUS PREMIUM');
-        // AccessControl.SetFilter("Company Name", '%1|%2', '', CompanyName());
-
-        exit(not AccessControl.IsEmpty());
     end;
 }
